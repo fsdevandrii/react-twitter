@@ -16,7 +16,7 @@ export default function Container({
   const [message, setMessage] = useState("");
 
   const handleSubmit = (value) => {
-    alert(value);
+    return sendData({ value });
   };
 
   const sendData = async (dataToSend) => {
@@ -25,7 +25,7 @@ export default function Container({
     try {
       const res = await fetch("http://localhost:4000/post-create", {
         method: "POST",
-        headers: { "Content-type": "application.json" },
+        headers: { "Content-Type": "application/json" },
         body: convertData(dataToSend),
       });
 
@@ -59,6 +59,10 @@ export default function Container({
         button={button}
         onSubmit={handleSubmit}
       />
+      {status === LOAD_STATUS.ERROR && (
+        <Alert status={status} message={message} />
+      )}
+      {status === LOAD_STATUS.PROGRESS && <Loader />}
     </Grid>
   );
 }

@@ -51,3 +51,31 @@ router.post('/post-create', function (req, res) {
     })
   }
 })
+
+// =====================================
+router.get('./post-list', function (req, res) {
+  try {
+    const list = Post.getList()
+
+    if (list.length === 0) {
+      return res.status(200).json({
+        list: [],
+      })
+    }
+
+    return res.status(200).json({
+      list: list.map(({ id, username, text, date }) => ({
+        id,
+        username,
+        text,
+        date,
+      })),
+    })
+  } catch (e) {
+    return res.status(400).json({
+      message: e.message,
+    })
+  }
+})
+// Експортуємо глобальний роутер
+module.exports = router
