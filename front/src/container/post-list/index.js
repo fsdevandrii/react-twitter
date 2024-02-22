@@ -45,6 +45,10 @@ export default function Container() {
     isEmpty: raw.list.lenght === 0,
   });
 
+  if (status === null) {
+    getData();
+  }
+
   return (
     <Grid>
       <Box>
@@ -57,6 +61,35 @@ export default function Container() {
           />
         </Grid>
       </Box>
+
+      {status === LOAD_STATUS.PROGRESS && (
+        <Fragment>
+          <Box>
+            <Skeleton />
+          </Box>
+          <Box>
+            <Skeleton />
+          </Box>
+        </Fragment>
+      )}
+
+      {status === LOAD_STATUS.ERROR && (
+        <Alert status={status} message={message} />
+      )}
+
+      {status === LOAD_STATUS.SUCCESS && (
+        <Fragment>
+          {data.isEmpty ? (
+            <Alert message="Список постів пустий" />
+          ) : (
+            data.list.map((item) => (
+              <Fragment key={item.id}>
+                {item.username} - {item.date}
+              </Fragment>
+            ))
+          )}
+        </Fragment>
+      )}
     </Grid>
   );
 }
