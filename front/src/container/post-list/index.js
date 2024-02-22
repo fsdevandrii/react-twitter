@@ -3,6 +3,7 @@ import { useState, Fragment } from "react";
 import Title from "../../component/title";
 import Grid from "../../component/grid";
 import Box from "../../component/box";
+import PostItem from "../../container/post-item";
 
 import PostCreate from "../post-create";
 import { Alert, Skeleton, LOAD_STATUS } from "../../component/load";
@@ -84,7 +85,7 @@ export default function Container() {
           ) : (
             data.list.map((item) => (
               <Fragment key={item.id}>
-                {item.username} - {item.date}
+                <PostItem {...item} />
               </Fragment>
             ))
           )}
